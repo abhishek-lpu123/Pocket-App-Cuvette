@@ -45,12 +45,12 @@ function Sidebar() {
         <h2 style={{ margin: '4%' }}>Pocket Notes</h2>
       </div>
       <div className='Btn'>
-      <button className='createBtn' onClick={openModal}>
-        <span style={{ position: 'relative', top: '5px', right: '5px', fontSize: '25px'}}>
-          <FaPlus />
-        </span>
-        Create Notes Group
-      </button></div>
+        <button className='createBtn' onClick={openModal}>
+          <span style={{ position: 'relative', top: '5px', right: '5px', fontSize: '25px' }}>
+            <FaPlus />
+          </span>
+          Create Notes Group
+        </button></div>
 
       {isModalOpen && <div className='overlay'></div>}
       <Modal
@@ -99,21 +99,23 @@ function Sidebar() {
 
       {createdNotesGroups.length > 0 && (
         <div className='createdNotesGroups'>
-          <ul style={{ marginTop: '25px', listStyleType: 'none'}}>
+          <ul style={{ marginTop: '25px', listStyleType: 'none' }}>
             {createdNotesGroups.map((group, index) => (
               <li
                 key={index}
                 className={`notes-group ${index === selectedItemIndex ? 'selected' : ''}`}
                 style={{
-                  fontSize: '20px',
+                  fontSize: '18px',
                   fontWeight: '600',
                   cursor: 'pointer',
                   backgroundColor: index === selectedItemIndex ? '#F7ECDC' : '',
                   marginLeft: '40px',
-                  display:'flex',
-                  flexWrap:'wrap',
+                  display: 'flex',
+                  flexWrap: 'wrap',
                   borderRadius: '20px 0px 0px 20px',
-                  padding:'20px'
+                  marginTop: '10px',
+                  padding: '10px',
+                  paddingLeft: '25px'
                 }}
                 onClick={() => handleListItemClick(index)} // Handle click event
               >
@@ -126,13 +128,13 @@ function Sidebar() {
                     borderRadius: '50%',
                     color: 'white',
                     fontWeight: '600',
-                    marginRight:'20px',
-              
+                    marginRight: '20px',
+
                   }}
                 >
                   {group.name.slice(0, 2).toUpperCase()}
                 </span>
-                <span style={{position:'relative', top:'10px'}}>{group.name}</span>
+                <span style={{ position: 'relative', top: '10px' }}>{group.name}</span>
               </li>
             ))}
           </ul>
