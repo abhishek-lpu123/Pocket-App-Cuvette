@@ -22,8 +22,6 @@
     transform: translateY(1px);
 }
 
-/* Define your custom styles for the modal content */
-/* Define a class for the overlay */
 .overlay {
     position: fixed;
     top: 0;
@@ -41,7 +39,7 @@
 
 .modal-content {
     width: 40vw;
-    height: 35vh;
+    height: 40vh;
     background-color: #fff;
     border-radius: 10px;
     position: absolute;
@@ -60,9 +58,9 @@
     font-weight: 600;
 }
 
-/* Define styles for buttons */
 .modal-button {
     position: relative;
+    top: 10px;
     float: right;
     width: 20%;
     padding: 10px 20px;

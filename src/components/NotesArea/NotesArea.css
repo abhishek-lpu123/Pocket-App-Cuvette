@@ -1,4 +1,10 @@
-.container2{
+.container2 {
+    background-color: #F7ECDC;
+    width: 70vw;
+    height: 100vh;
+}
+
+.home {
     width: 70vw;
     height: 100vh;
     background-color: #F7ECDC;
@@ -6,4 +12,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.title {
+    background-color: #E8E8E8;
+    height: 40px;
+    padding: 20px;
 }

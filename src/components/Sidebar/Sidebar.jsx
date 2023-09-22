@@ -3,14 +3,14 @@ import './Sidebar.css';
 import { FaPlus } from 'react-icons/fa';
 import Modal from 'react-modal';
 
-function Sidebar() {
+function Sidebar({ setSelectedGroupName, setSelectedGroupColor }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notesGroup, setNotesGroup] = useState({ name: '', colorIndex: -1 });
   const [createdNotesGroups, setCreatedNotesGroups] = useState(() => {
     const storedGroups = localStorage.getItem('createdNotesGroups');
     return storedGroups ? JSON.parse(storedGroups) : [];
   });
-  const [selectedItemIndex, setSelectedItemIndex] = useState(-1); // Track selected item index
+  const [selectedItemIndex, setSelectedItemIndex] = useState(-1); 
   const colors = ['#b38bfa', '#ff79f2', '#43e6fc', '#f19576', '#0041ff', '#6691ff'];
 
   useEffect(() => {
@@ -36,7 +36,11 @@ function Sidebar() {
   };
 
   const handleListItemClick = (index) => {
-    setSelectedItemIndex(index); // Set the selected item index
+    setSelectedItemIndex(index); 
+    const selectedGroup = createdNotesGroups[index];
+  setSelectedGroupName(selectedGroup.name);
+  setSelectedGroupColor(colors[selectedGroup.colorIndex]);
+
   };
 
   return (
@@ -60,7 +64,7 @@ function Sidebar() {
         className='modal-content'
       >
         <div className='model-data'>
-          <h3 style={{ padding: '0px 0px 10px 5px' }}>Create New Notes Group</h3>
+          <h3 style={{ padding: '15px 0px 10px 5px' }}>Create New Notes Group</h3>
           <div style={{ display: 'flex', justifyContent: 'space-around' }}>
             <h3 style={{ padding: '10px 40px 0px 2px' }}>Group Name</h3>
             <input
@@ -117,7 +121,7 @@ function Sidebar() {
                   padding: '10px',
                   paddingLeft: '25px'
                 }}
-                onClick={() => handleListItemClick(index)} // Handle click event
+                onClick={() => handleListItemClick(index)} 
               >
                 <span
                   className='initials'
