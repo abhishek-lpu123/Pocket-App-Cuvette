@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 
 function Sidebar({ setSelectedGroupName, setSelectedGroupColor }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notesGroup, setNotesGroup] = useState({ name: '', colorIndex: -1 });
+  const [notesGroup, setNotesGroup] = useState({ name: '', colorIndex: 0 });
   const [createdNotesGroups, setCreatedNotesGroups] = useState(() => {
     const storedGroups = localStorage.getItem('createdNotesGroups');
     return storedGroups ? JSON.parse(storedGroups) : [];
@@ -30,7 +30,7 @@ function Sidebar({ setSelectedGroupName, setSelectedGroupColor }) {
   const handleSubmit = () => {
     if (notesGroup.name.trim() !== '' && notesGroup.colorIndex !== -1) {
       setCreatedNotesGroups([...createdNotesGroups, notesGroup]);
-      setNotesGroup({ name: '', colorIndex: -1 });
+      setNotesGroup({ name: '', colorIndex: 0 });
       closeModal();
     }
   };

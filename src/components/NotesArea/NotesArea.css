@@ -16,5 +16,33 @@
 
 .title {
     background-color: #E8E8E8;
-    padding: 25px;
+    padding: 20px;
+}
+
+.notes-input{
+    width: 69.9vw;
+    background-color: #E8E8E8;
+    position: absolute;
+    bottom: 0px;
+}
+.textarea{
+    width: 63vw;
+    height: 25vh;
+    margin: 1.5em;
+    padding: 2%;
+    border-radius: 10px;
+    resize: none;
+    font-size: 1rem;
+    font-family:'DM Sans', sans-serif;
+}
+
+.enter{
+    position: absolute;
+    right: 4%;
+    bottom:17%;
+}
+
+.enter:hover{
+    cursor: pointer;
+    transform: translateY(-1px);
 }

@@ -2,26 +2,33 @@ import React from 'react'
 import './NotesArea.css'
 import frontImg from '../../assests/frontImg.png'
 import lock from '../../assests/lock.svg'
+import enter from '../../assests/enter.svg'
 
 function NotesArea({ selectedGroupName, selectedGroupColor }) {
   return (
     <div className='container2'>
       {selectedGroupName ? (
-        <div className='title'>
-          <span
-            className="initials"
-            style={{
-              backgroundColor: selectedGroupColor,
-              fontSize: '20px',
-              padding: '10px',
-              borderRadius: '50%',
-              color: 'white',
-              fontWeight: '600',
-            }}
-          >
-            {selectedGroupName.slice(0, 2).toUpperCase()}
-          </span>
-          <p style={{ fontSize: '20px', display: 'inline', padding:'12px',paddingLeft:'20px', fontWeight:'600' }}>{selectedGroupName}</p></div>
+        <div>
+          <div className='title'>
+            <span
+              className="initials"
+              style={{
+                backgroundColor: selectedGroupColor,
+                fontSize: '20px',
+                padding: '10px',
+                borderRadius: '50%',
+                color: 'white',
+                fontWeight: '600',
+              }}
+            >
+              {selectedGroupName.slice(0, 2).toUpperCase()}
+            </span>
+            <p style={{ fontSize: '20px', display: 'inline', padding: '12px', paddingLeft: '20px', fontWeight: '600' }}>{selectedGroupName}</p></div>
+          <div className='notes-input'>
+              <textarea className='textarea' placeholder='Enter your text here...'></textarea>
+              <img className='enter' src={enter}/>
+          </div>
+        </div>
       ) : (
         <div className="home">
           <img src={frontImg} width={500} alt="Front" />
@@ -40,7 +47,7 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
             </p>
           </div>
         </div>
-        )}
+      )}
 
     </div>
   );
