@@ -1,10 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './NotesArea.css'
 import frontImg from '../../assests/frontImg.png'
 import lock from '../../assests/lock.svg'
 import enter from '../../assests/enter.svg'
 
 function NotesArea({ selectedGroupName, selectedGroupColor }) {
+
+  const [data, setData] = useState('')
+  const [displayData, setDisplayData] = useState([])
+
+  const handleChange = (e) => {
+    setData(e.target.value);
+  }
+
+  const handleEnter = () => {
+    if (data.trim() !== '') {
+    const now = new Date();
+    const formattedDateTime = formatDateTime(now);
+    const newData = { text: data, datetime: formattedDateTime };
+    setDisplayData([...displayData, newData]);
+    setData('');
+    }
+  };
+
+  const formatDateTime = (date) => {
+    const monthNames = [
+      'January', 'February', 'March',
+      'April', 'May', 'June', 'July',
+      'August', 'September', 'October',
+      'November', 'December'
+    ];
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedDate = `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+    const formattedTime = `${hours % 12 || 12}:${minutes < 10 ? '0' : ''}${minutes} ${ampm}`;
+    return (
+      <>
+        {formattedTime}<br/>
+        {formattedDate}
+      </>
+    );
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleEnter();
+      e.preventDefault();
+    }
+  }
+
   return (
     <div className='container2'>
       {selectedGroupName ? (
@@ -24,9 +69,16 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
               {selectedGroupName.slice(0, 2).toUpperCase()}
             </span>
             <p style={{ fontSize: '20px', display: 'inline', padding: '12px', paddingLeft: '20px', fontWeight: '600' }}>{selectedGroupName}</p></div>
+          <div className='notes-display'>
+            {displayData.map((showData) => (
+              <div className='notes-align'>
+              <p style={{width:'15vw', textAlign:'center'}}>{showData.datetime}</p>
+                  <p style={{width:'55vw', marginLeft:'4%'}}>{showData.text}</p></div>
+            ))}
+          </div>
           <div className='notes-input'>
-              <textarea className='textarea' placeholder='Enter your text here...'></textarea>
-              <img className='enter' src={enter}/>
+            <textarea className='textarea' placeholder='Enter your text here...' value={data} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
+            <img className='enter' src={enter} onClick={handleEnter} />
           </div>
         </div>
       ) : (

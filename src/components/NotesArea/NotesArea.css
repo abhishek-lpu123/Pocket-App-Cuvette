@@ -46,3 +46,17 @@
     cursor: pointer;
     transform: translateY(-1px);
 }
+
+.notes-display{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 20px;
+    width: 68vw;
+    height: 45vh;
+    overflow-y: auto;
+}
+
+.notes-align{
+    display: flex;
+}
