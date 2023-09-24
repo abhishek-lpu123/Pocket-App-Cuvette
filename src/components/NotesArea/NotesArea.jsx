@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './NotesArea.css'
 import frontImg from '../../assests/frontImg.png'
 import lock from '../../assests/lock.svg'
@@ -8,6 +8,7 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
 
   const [data, setData] = useState('')
   const [displayData, setDisplayData] = useState([])
+  const notesContainerRef = useRef(null);
 
   const handleChange = (e) => {
     setData(e.target.value);
@@ -44,11 +45,17 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
       handleEnter();
       e.preventDefault();
     }
   }
+
+  useEffect(() => {
+    if (notesContainerRef.current) {
+      notesContainerRef.current.scrollTop = notesContainerRef.current.scrollHeight;
+    }
+  }, [displayData]);
 
   return (
     <div className='container2'>
@@ -69,11 +76,11 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
               {selectedGroupName.slice(0, 2).toUpperCase()}
             </span>
             <p style={{ fontSize: '20px', display: 'inline', padding: '12px', paddingLeft: '20px', fontWeight: '600' }}>{selectedGroupName}</p></div>
-          <div className='notes-display'>
+          <div className='notes-display' ref={notesContainerRef}>
             {displayData.map((showData) => (
               <div className='notes-align'>
               <p style={{width:'15vw', textAlign:'center'}}>{showData.datetime}</p>
-                  <p style={{width:'55vw', marginLeft:'4%'}}>{showData.text}</p></div>
+                  <pre style={{width:'55vw', marginLeft:'4%', fontFamily:'DM Sans, sans-serif'}}>{showData.text}</pre></div>
             ))}
           </div>
           <div className='notes-input'>
