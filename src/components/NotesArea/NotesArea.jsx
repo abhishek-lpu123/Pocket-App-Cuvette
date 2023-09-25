@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
-import './NotesArea.css'
-import frontImg from '../../assests/frontImg.png'
-import lock from '../../assests/lock.svg'
-import enter from '../../assests/enter.svg'
+import React, { useState, useEffect, useRef } from 'react';
+import './NotesArea.css';
+import frontImg from '../../assests/frontImg.png';
+import lock from '../../assests/lock.svg';
+import enter from '../../assests/enter.svg';
 
 function NotesArea({ selectedGroupName, selectedGroupColor }) {
-
-  const [data, setData] = useState('')
-  const [displayData, setDisplayData] = useState([])
+  const [data, setData] = useState('');
+  const [displayData, setDisplayData] = useState({});
   const notesContainerRef = useRef(null);
 
   const handleChange = (e) => {
@@ -16,11 +15,14 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
 
   const handleEnter = () => {
     if (data.trim() !== '') {
-    const now = new Date();
-    const formattedDateTime = formatDateTime(now);
-    const newData = { text: data, datetime: formattedDateTime };
-    setDisplayData([...displayData, newData]);
-    setData('');
+      const now = new Date();
+      const formattedDateTime = formatDateTime(now);
+      const newData = { text: data, datetime: formattedDateTime };
+      setDisplayData((prevNotes) => ({
+        ...prevNotes,
+        [selectedGroupName]: [...(prevNotes[selectedGroupName] || []), newData],
+      }));
+      setData('');
     }
   };
 
@@ -75,13 +77,19 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
             >
               {selectedGroupName.slice(0, 2).toUpperCase()}
             </span>
-            <p style={{ fontSize: '20px', display: 'inline', padding: '12px', paddingLeft: '20px', fontWeight: '600' }}>{selectedGroupName}</p></div>
+            <p style={{ fontSize: '20px', display: 'inline', padding: '12px', paddingLeft: '20px', fontWeight: '600' }}>{selectedGroupName}</p>
+          </div>
           <div className='notes-display' ref={notesContainerRef}>
-            {displayData.map((showData) => (
-              <div className='notes-align'>
-              <p style={{width:'15vw', textAlign:'center'}}>{showData.datetime}</p>
-                  <pre style={{width:'55vw', marginLeft:'4%', fontFamily:'DM Sans, sans-serif'}}>{showData.text}</pre></div>
-            ))}
+            {displayData[selectedGroupName] ? (
+              displayData[selectedGroupName].map((showData, index) => (
+                <div key={index} className='notes-align'>
+                  <p style={{ width: '15vw', textAlign: 'center' }}>{showData.datetime}</p>
+                  <pre style={{ width: '55vw', marginLeft: '5%', fontFamily: 'DM Sans, sans-serif' }}>{showData.text}</pre>
+                </div>
+              ))
+            ) : (
+              <p>No notes available for this group.</p>
+            )}
           </div>
           <div className='notes-input'>
             <textarea className='textarea' placeholder='Enter your text here...' value={data} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
@@ -112,4 +120,4 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
   );
 }
 
-export default NotesArea
+export default NotesArea;
