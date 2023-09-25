@@ -6,7 +6,10 @@ import enter from '../../assests/enter.svg';
 
 function NotesArea({ selectedGroupName, selectedGroupColor }) {
   const [data, setData] = useState('');
-  const [displayData, setDisplayData] = useState({});
+  const [displayData, setDisplayData] = useState(() => {
+    const storedData = localStorage.getItem('notes');
+    return storedData ? JSON.parse(storedData) : {};
+  });
   const notesContainerRef = useRef(null);
 
   const handleChange = (e) => {
@@ -26,6 +29,17 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
     }
   };
 
+  useEffect(() => {
+    const storedData = localStorage.getItem('notes');
+    if (storedData) {
+      setDisplayData(JSON.parse(storedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(displayData));
+  }, [displayData]);
+
   const formatDateTime = (date) => {
     const monthNames = [
       'January', 'February', 'March',
@@ -38,12 +52,9 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
     const ampm = hours >= 12 ? 'PM' : 'AM';
     const formattedDate = `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
     const formattedTime = `${hours % 12 || 12}:${minutes < 10 ? '0' : ''}${minutes} ${ampm}`;
-    return (
-      <>
-        {formattedTime}<br/>
-        {formattedDate}
-      </>
-    );
+    const dateTimeString = `${formattedTime}\n${formattedDate}`;
+
+  return dateTimeString;
   };
 
   const handleKeyDown = (e) => {
@@ -83,7 +94,7 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
             {displayData[selectedGroupName] ? (
               displayData[selectedGroupName].map((showData, index) => (
                 <div key={index} className='notes-align'>
-                  <p style={{ width: '15vw', textAlign: 'center' }}>{showData.datetime}</p>
+                  <pre style={{ width: '15vw', textAlign: 'center', fontFamily: 'DM Sans, sans-serif'  }}>{showData.datetime}</pre>
                   <pre style={{ width: '55vw', marginLeft: '5%', fontFamily: 'DM Sans, sans-serif' }}>{showData.text}</pre>
                 </div>
               ))
