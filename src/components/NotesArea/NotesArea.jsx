@@ -4,7 +4,7 @@ import frontImg from '../../assests/frontImg.png';
 import lock from '../../assests/lock.svg';
 import enter from '../../assests/enter.svg';
 
-function NotesArea({ selectedGroupName, selectedGroupColor }) {
+function NotesArea({ selectedGroupName, selectedGroupColor}) {
   const [data, setData] = useState('');
   const [displayData, setDisplayData] = useState(() => {
     const storedData = localStorage.getItem('notes');
@@ -63,6 +63,7 @@ function NotesArea({ selectedGroupName, selectedGroupColor }) {
       e.preventDefault();
     }
   }
+
 
   useEffect(() => {
     if (notesContainerRef.current) {

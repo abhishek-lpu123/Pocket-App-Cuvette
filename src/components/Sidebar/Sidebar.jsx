@@ -3,7 +3,7 @@ import './Sidebar.css';
 import { FaPlus } from 'react-icons/fa';
 import Modal from 'react-modal';
 
-function Sidebar({ setSelectedGroupName, setSelectedGroupColor }) {
+function Sidebar({ setSelectedGroupName, setSelectedGroupColor}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notesGroup, setNotesGroup] = useState({ name: '', colorIndex: 0 });
   const [createdNotesGroups, setCreatedNotesGroups] = useState(() => {
@@ -35,12 +35,20 @@ function Sidebar({ setSelectedGroupName, setSelectedGroupColor }) {
     }
   };
 
+  const handleDeleteGroupName = () => {
+    if (selectedItemIndex !== -1) {
+      const updatedGroups = [...createdNotesGroups];
+      updatedGroups.splice(selectedItemIndex, 1);
+      setCreatedNotesGroups(updatedGroups);
+      setSelectedItemIndex(-1);
+      setSelectedGroupName(null);
+    }};
+
   const handleListItemClick = (index) => {
     setSelectedItemIndex(index); 
     const selectedGroup = createdNotesGroups[index];
   setSelectedGroupName(selectedGroup.name);
   setSelectedGroupColor(colors[selectedGroup.colorIndex]);
-
   };
 
   return (
@@ -54,8 +62,8 @@ function Sidebar({ setSelectedGroupName, setSelectedGroupColor }) {
             <FaPlus />
           </span>
           Create Notes Group
-        </button></div>
-
+        </button>
+        </div>
       {isModalOpen && <div className='overlay'></div>}
       <Modal
         isOpen={isModalOpen}
@@ -100,7 +108,7 @@ function Sidebar({ setSelectedGroupName, setSelectedGroupColor }) {
           </div>
         </div>
       </Modal>
-
+        
       {createdNotesGroups.length > 0 && (
         <div className='createdNotesGroups'>
           <ul style={{ marginTop: '25px', listStyleType: 'none' }}>
@@ -144,7 +152,13 @@ function Sidebar({ setSelectedGroupName, setSelectedGroupColor }) {
           </ul>
         </div>
       )}
+      {selectedItemIndex !== -1 && (
+        <button className='deleteBtn' onClick={handleDeleteGroupName}>
+          Delete
+        </button>
+      )}
     </div>
+    
   );
 }
 

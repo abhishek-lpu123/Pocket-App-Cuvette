@@ -4,14 +4,19 @@ import NotesArea from './components/NotesArea/NotesArea';
 import { useState } from 'react';
 
 function App() {
-
   const [selectedGroupName, setSelectedGroupName] = useState('');
   const [selectedGroupColor, setSelectedGroupColor] = useState('');
 
   return (
     <div className='container'>
-    <Sidebar setSelectedGroupName={setSelectedGroupName} setSelectedGroupColor={setSelectedGroupColor} />
-      <NotesArea selectedGroupName={selectedGroupName} selectedGroupColor={selectedGroupColor} />
+      <Sidebar
+        setSelectedGroupName={setSelectedGroupName}
+        setSelectedGroupColor={setSelectedGroupColor}
+      />
+      <NotesArea
+        selectedGroupName={selectedGroupName}
+        selectedGroupColor={selectedGroupColor}
+      />
     </div>
   );
 }
